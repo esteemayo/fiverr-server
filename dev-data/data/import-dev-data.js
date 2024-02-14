@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import 'colors';
 
-import { connectDB } from '../../config/db.js';
+import connectDB from '../../config/db.js';
 
 dotenv.config({ path: './variable.env' });
 

@@ -1,4 +1,7 @@
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config({ path: './variable.env' });
 
 const devEnv = process.env.NODE_ENV !== 'production';
 const { DATABASE, DATABASE_PASSWORD, DATABASE_LOCAL } = process.env;
@@ -8,7 +11,7 @@ const mongoURI = DATABASE.replace('<PASSWORD>', DATABASE_PASSWORD);
 
 const db = devEnv ? dbLocal : mongoURI;
 
-export const connectDB = async () => {
+const connectDB = async () => {
   try {
     const conn = await mongoose.connect(db);
     console.log(`Connected to MongoDB → ${conn.connection.port}`.gray.bold);
@@ -22,3 +25,5 @@ mongoose.set('strictQuery', false);
 mongoose.connection.on('disconnected', () => {
   console.log('MongoDB Disconnected'.strikethrough);
 });
+
+export default connectDB
