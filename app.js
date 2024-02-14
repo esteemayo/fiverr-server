@@ -8,7 +8,10 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import compression from 'compression';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import 'colors';
+
+dotenv.config({ path: './variable.env' });
 
 const app = express();
 

@@ -10,7 +10,7 @@ app.set('port', process.env.PORT || 4000);
 
 const server = app.listen(app.get('port'), async () => {
   await connectDB();
-  console.log(`App listening on port → ${server.address().port}`);
+  console.log(`App listening on port → ${server.address().port}`.blue.bold);
 });
 
 process.on('unhandledRejection', (err) => {
