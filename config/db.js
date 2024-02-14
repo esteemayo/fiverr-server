@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-
-dotenv.config({ path: './variable.env' });
 
 const devEnv = process.env.NODE_ENV !== 'production';
 const { DATABASE, DATABASE_PASSWORD, DATABASE_LOCAL } = process.env;
