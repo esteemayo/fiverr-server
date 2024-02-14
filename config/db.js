@@ -26,4 +26,4 @@ mongoose.connection.on('disconnected', () => {
   console.log('MongoDB Disconnected'.strikethrough);
 });
 
-export default connectDB
+export default connectDB;
