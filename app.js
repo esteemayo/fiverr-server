@@ -23,6 +23,10 @@ app.options('*', cors());
 
 app.use(helmet());
 
+if (!process.env.JWT_SECRET) {
+  process.exit(1);
+}
+
 if (app.get('env') !== 'production') {
   app.use(morgan('dev'));
 }
