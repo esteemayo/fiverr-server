@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import 'colors';
 
 import { NotFoundError } from './errors/notFound.js';
+import { errorHandlerMiddleware } from './middlewares/errorHandler.js';
 
 dotenv.config({ path: './variable.env' });
 
@@ -50,5 +51,7 @@ app.use(compression());
 app.all('*', (req, res, next) => {
   next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
 });
+
+app.use(errorHandlerMiddleware);
 
 export default app;
