@@ -11,6 +11,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import 'colors';
 
+import { NotFoundError } from './errors/notFound.js';
+
 dotenv.config({ path: './variable.env' });
 
 const app = express();
@@ -44,5 +46,9 @@ app.use(hpp());
 app.use(xss());
 
 app.use(compression());
+
+app.all('*', (req, res, next) => {
+  next(new NotFoundError(`Can't find ${req.originalUrl} on this server!`));
+});
 
 export default app;
