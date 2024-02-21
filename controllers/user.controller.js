@@ -38,3 +38,11 @@ export const updateMe = asyncHandler(async (req, res, next) => {
 
   createSendToken(updatedUser, StatusCodes.OK, req, res);
 });
+
+export const deleteMe = asyncHandler(async (req, res, next) => {
+  const { id: userId } = req.user;
+
+  await User.findByIdAndUpdate(userId, { $set: { isActive: false } });
+
+  return res.status(StatusCodes.NO_CONTENT).end();
+});
