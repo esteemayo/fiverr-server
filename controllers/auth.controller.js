@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 
 import User from '../models/user.model.js';
+import { createSendToken } from '../utils/createSendToken.js';
 
 import { BadRequestError } from './../errors/badRequest.js';
 import { UnauthenticatedError } from './../errors/unauthenticated.js';
@@ -10,7 +11,7 @@ export const register = asyncHandler(async (req, res, next) => {
   const user = await User.create({ ...req.body });
 
   if (user) {
-    return res.status(StatusCodes.CREATED).json(user);
+    createSendToken(user, StatusCodes.CREATED, res);
   }
 });
 
@@ -27,5 +28,5 @@ export const login = asyncHandler(async (req, res, next) => {
     return next(new UnauthenticatedError('Incorrect username or password'));
   }
 
-  return res.status(StatusCodes.OK).json(user);
+  createSendToken(user, StatusCodes.OK, res);
 });
