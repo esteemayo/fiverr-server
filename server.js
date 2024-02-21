@@ -6,7 +6,7 @@ process.on('uncaughtException', (err) => {
   console.log(err.name, err.message);
 });
 
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 8800);
 
 const server = app.listen(app.get('port'), async () => {
   await connectDB();
