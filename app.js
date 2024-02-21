@@ -61,10 +61,10 @@ app.use(xss());
 app.use(compression());
 
 app.use('/api/v1/users', userRoute);
-app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/gigs', gigRoute);
-app.use('/api/v1/orders', orderRoute);
+app.use('/api/v1/auth', authRoute);
 app.use('/api/v1/reviews', reviewRoute);
+app.use('/api/v1/orders', orderRoute);
 app.use('/api/v1/conversations', conversationRoute);
 app.use('/api/v1/messages', messageRoute);
 
