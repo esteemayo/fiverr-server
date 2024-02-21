@@ -10,7 +10,7 @@ export const register = asyncHandler(async (req, res, next) => {
   const user = await User.create({ ...req.body });
 
   if (user) {
-    res.status(StatusCodes.CREATED).json(user);
+    return res.status(StatusCodes.CREATED).json(user);
   }
 });
 
