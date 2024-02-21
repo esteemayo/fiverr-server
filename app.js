@@ -31,7 +31,7 @@ app.options('*', cors());
 
 app.use(helmet());
 
-if (!process.env.JWT_SECRET) {
+if (!process.env.JWT_SECRET_KEY) {
   process.exit(1);
 }
 
