@@ -90,9 +90,16 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
+  return jwt.sign(
+    {
+      id: this._id,
+      isSeller: this.isSeller,
+    },
+    process.env.JWT_SECRET_KEY,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    },
+  );
 };
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
