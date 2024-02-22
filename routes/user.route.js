@@ -13,4 +13,6 @@ router.patch('/delete-me', userController.deleteMe);
 
 router.route('/').get(userController.getUsers);
 
+router.route('/:id').get(authMiddleware.verifyUser, userController.getUser);
+
 export default router;
