@@ -85,6 +85,20 @@ export const updateMe = asyncHandler(async (req, res, next) => {
   createSendToken(updatedUser, StatusCodes.OK, req, res);
 });
 
+export const deleteUser = asyncHandler(async (req, res, next) => {
+  const { id: userId } = req.params;
+
+  const user = await User.findByIdAndDelete(userId);
+
+  if (!user) {
+    return next(
+      new NotFoundError(`There is no user found with that ID → ${userId}`),
+    );
+  }
+
+  return res.status(StatusCodes.NO_CONTENT).end();
+});
+
 export const deleteMe = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
 
