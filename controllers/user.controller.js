@@ -3,9 +3,10 @@ import _ from 'lodash';
 import asyncHandler from 'express-async-handler';
 
 import User from '../models/user.model.js';
-import { BadRequestError } from '../errors/badRequest.js';
 import { createSendToken } from '../utils/createSendToken.js';
+
 import { NotFoundError } from '../errors/notFound.js';
+import { BadRequestError } from '../errors/badRequest.js';
 
 export const getUsers = asyncHandler(async (req, res, next) => {
   const query = req.query.new;
