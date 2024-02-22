@@ -36,6 +36,16 @@ export const login = asyncHandler(async (req, res, next) => {
   return createSendToken(user, StatusCodes.OK, req, res);
 });
 
+export const logout = async (req, res, next) => {
+  res
+    .clearCookie('accessToken', {
+      sameSite: 'none',
+      secure: true,
+    })
+    .status(StatusCodes.OK)
+    .json('User has been logged out');
+};
+
 export const forgotPassword = asyncHandler(async (req, res, next) => {
   const { email } = req.body;
 
