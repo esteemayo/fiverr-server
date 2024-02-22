@@ -61,7 +61,7 @@ export const forgotPassword = asyncHandler(async (req, res, next) => {
   `;
 
   const html = `
-    <div style='background: #f7f7f7; color: #333; padding: 50px; text-align: left;'>
+    <div style='background: #f9f9f9; color: #555; padding: 50px; text-align: left;'>
       <h3>Hi ${user.name},</h3>
       <p>There was a request to change your password!</p>
       <p>If you did not make this request then please ignore this email.</p>
