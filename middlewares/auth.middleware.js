@@ -30,7 +30,8 @@ export const protect = asyncHandler(async (req, res, next) => {
     process.env.JWT_SECRET_KEY,
   );
 
-  const currentUser = await User.findById(decoded.id).select('+password');
+  const currentUser = await User.findById(decoded.id);
+
   if (!currentUser) {
     return next(
       new UnauthenticatedError(
