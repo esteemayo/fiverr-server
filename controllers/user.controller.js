@@ -6,6 +6,16 @@ import User from '../models/user.model.js';
 import { BadRequestError } from '../errors/badRequest.js';
 import { createSendToken } from '../utils/createSendToken.js';
 
+export const getUsers = asyncHandler(async (req, res, next) => {
+  const query = req.query.new;
+
+  const users = query
+    ? await User.find().sort('-createdAt').limit(5)
+    : await User.find().sort('-_id');
+
+  return res.status(StatusCodes.OK).json(users);
+});
+
 export const updateMe = asyncHandler(async (req, res, next) => {
   const { id: userId } = req.user;
   const { password, confirmPassword } = req.body;
