@@ -11,7 +11,7 @@ router.patch('/update-me', userController.updateMe);
 
 router.patch('/delete-me', userController.deleteMe);
 
-router.route('/').get(userController.getUsers);
+router.route('/').get(userController.getUsers).post(userController.createUser);
 
 router
   .route('/:id')

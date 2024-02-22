@@ -106,3 +106,12 @@ export const deleteMe = asyncHandler(async (req, res, next) => {
 
   return res.status(StatusCodes.NO_CONTENT).end();
 });
+
+export const createUser = (req, res, next) => {
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    status: 'fail',
+    message: `This route is not defined! Please use ${req.protocol}://${req.get(
+      'host',
+    )}/api/v1/auth/register`,
+  });
+};
