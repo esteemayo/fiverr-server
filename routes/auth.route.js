@@ -1,5 +1,6 @@
 import express from 'express';
 
+import * as authMiddleware from '../middlewares/auth.middleware.js';
 import * as authController from '../controllers/auth.controller.js';
 
 const router = express.Router();
@@ -11,5 +12,11 @@ router.post('/login', authController.login);
 router.post('/forgot-password', authController.forgotPassword);
 
 router.post('/reset-password/:token', authController.resetPassword);
+
+router.patch(
+  '/update-my-password',
+  authMiddleware.protect,
+  authController.updatePassword,
+);
 
 export default router;
