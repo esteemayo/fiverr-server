@@ -27,8 +27,9 @@ dotenv.config({ path: './variable.env' });
 
 const app = express();
 
-app.use(cors());
-app.options('*', cors());
+app.use(cors({ origin: 'http://localhost:5174', credentials: true }))
+// app.use(cors());
+// app.options('*', cors());
 
 app.use(helmet());
 
