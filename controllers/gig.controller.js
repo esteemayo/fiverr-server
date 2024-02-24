@@ -5,6 +5,12 @@ import Gig from '../models/gig.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
+export const getGigs = asyncHandler(async (req, res, next) => {
+  const gigs = await Gig.find();
+
+  res.status(StatusCodes.OK).json(gigs);
+});
+
 export const getGig = asyncHandler(async (req, res, next) => {
   const { id: gigId } = req.params;
 

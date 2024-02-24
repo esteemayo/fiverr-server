@@ -5,7 +5,10 @@ import * as authMiddleware from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
-router.route('/').post(authMiddleware.protect, gigController.createGig);
+router
+  .route('/')
+  .get(gigController.getGigs)
+  .post(authMiddleware.protect, gigController.createGig);
 
 router
   .route('/:id')
