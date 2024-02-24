@@ -27,11 +27,11 @@ export const deleteGig = asyncHandler(async (req, res, next) => {
     );
   }
 
-  if (gig.user.toString() !== req.user.id || req.user.role !== 'admin') {
-    return next(new ForbiddenError('You can delete only your gig!'));
+  if (gig.user.toString() === req.user.id || req.user.role === 'admin') {
+    await Gig.findByIdAndDelete(gigId);
+
+    return res.status(StatusCodes.NO_CONTENT).end();
   }
 
-  await Gig.findByIdAndDelete(gigId);
-
-  return res.status(StatusCodes.NO_CONTENT).end();
+  return next(new ForbiddenError('You can delete only your gig!'));
 });
