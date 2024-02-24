@@ -7,7 +7,7 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(gigController.getGigs)
+  .get(authMiddleware.protect, gigController.getGigs)
   .post(authMiddleware.protect, gigController.createGig);
 
 router
