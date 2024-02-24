@@ -18,7 +18,7 @@ export const getGigs = asyncHandler(async (req, res, next) => {
     ...(q.search && { title: { $regex: q.search, $options: 'i' } }),
   };
 
-  const gigs = await Gig.find(filters);
+  const gigs = await Gig.find(filters).sort('-createdAt');
 
   res.status(StatusCodes.OK).json(gigs);
 });
