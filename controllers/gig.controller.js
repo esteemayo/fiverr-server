@@ -33,7 +33,7 @@ export const createGig = asyncHandler(async (req, res, next) => {
   if (!req.body.user) req.body.user = req.user.id;
   const gig = await Gig.create({ ...req.body });
 
-  return res.status(StatusCodes.CREATED).json(gig);
+  res.status(StatusCodes.CREATED).json(gig);
 });
 
 export const deleteGig = asyncHandler(async (req, res, next) => {
@@ -50,7 +50,7 @@ export const deleteGig = asyncHandler(async (req, res, next) => {
   if (gig.user.toString() === req.user.id || req.user.role === 'admin') {
     await Gig.findByIdAndDelete(gigId);
 
-    return res.status(StatusCodes.NO_CONTENT).end();
+    res.status(StatusCodes.NO_CONTENT).end();
   }
 
   return next(new ForbiddenError('You can delete only your gig!'));
