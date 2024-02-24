@@ -6,7 +6,18 @@ import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
 export const getGigs = asyncHandler(async (req, res, next) => {
-  const gigs = await Gig.find();
+  const q = req.query;
+
+  const filters = {
+    ...(q.user && { user: q.user }),
+    ...(q.category && { category: q.category }),
+    ...((q.max || q.min) && {
+      price: { ...(q.min && { $gte: q.min }), ...(q.max && { $lte: q.max }) },
+    }),
+    ...(q.search && { title: { $regex: q.search, $options: 'i' } }),
+  };
+
+  const gigs = await Gig.find(filters);
 
   res.status(StatusCodes.OK).json(gigs);
 });
