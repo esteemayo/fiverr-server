@@ -15,3 +15,23 @@ export const createGig = asyncHandler(async (req, res, next) => {
 
   return res.status(StatusCodes.CREATED).json(gig);
 });
+
+export const deleteGig = asyncHandler(async (req, res, next) => {
+  const { id: gigId } = req.params;
+
+  const gig = await Gig.findById(gigId);
+
+  if (!gig) {
+    return next(
+      new NotFoundError(`There is no user found with that ID → ${gigId}`),
+    );
+  }
+
+  if (gig.user.toString() !== req.user.id || req.user.role !== 'admin') {
+    return next(new ForbiddenError('You can delete only your gig!'));
+  }
+
+  await Gig.findByIdAndDelete(gigId);
+
+  return res.status(StatusCodes.NO_CONTENT).end();
+});

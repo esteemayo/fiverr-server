@@ -7,4 +7,6 @@ const router = express.Router();
 
 router.route('/').post(authMiddleware.protect, gigController.createGig);
 
+router.route('/:id').delete(authMiddleware.protect, gigController.deleteGig);
+
 export default router;
