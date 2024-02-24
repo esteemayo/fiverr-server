@@ -1,9 +1,10 @@
 import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 
-import Gig from '../models/gig.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
+
+import Gig from '../models/gig.model.js';
 
 export const getGigs = asyncHandler(async (req, res, next) => {
   const q = req.query;
