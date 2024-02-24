@@ -1,3 +1,4 @@
+import slugify from 'slugify';
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
@@ -12,6 +13,9 @@ const gigSchema = new Schema(
     title: {
       type: String,
       required: [true, 'A gig must have a title'],
+    },
+    slug: {
+      type: String,
     },
     desc: {
       type: String,
@@ -68,6 +72,18 @@ const gigSchema = new Schema(
     timestamps: true,
   },
 );
+
+gigSchema.pre('save', async function (next) {
+  if (!this.isModified('title')) return next();
+  this.slug = slugify(this.title, { lower: true });
+
+  const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+  const gigWithSlug = await this.constructor.find({ slug: slugRegEx });
+
+  if (gigWithSlug.length) {
+    this.slug = `${this.slug}-${gigWithSlug.length + 1}`;
+  }
+});
 
 const Gig = mongoose.models.Gig || mongoose.model('Gig', gigSchema);
 
