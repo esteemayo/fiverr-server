@@ -23,7 +23,7 @@ export const deleteGig = asyncHandler(async (req, res, next) => {
 
   if (!gig) {
     return next(
-      new NotFoundError(`There is no user found with that ID → ${gigId}`),
+      new NotFoundError(`There is no gig found with that ID → ${gigId}`),
     );
   }
 
