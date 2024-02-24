@@ -1,5 +1,10 @@
 import express from 'express';
 
+import * as gigController from '../controllers/gig.controller.js';
+import * as authMiddleware from '../middlewares/auth.middleware.js';
+
 const router = express.Router();
+
+router.route('/').post(authMiddleware.protect, gigController.createGig);
 
 export default router;
