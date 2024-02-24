@@ -5,6 +5,20 @@ import Gig from '../models/gig.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
+export const getGig = asyncHandler(async (req, res, next) => {
+  const { id: gigId } = req.params;
+
+  const gig = await Gig.findById(gigId);
+
+  if (!gig) {
+    return next(
+      new NotFoundError(`There is no gig found with that ID → ${gigId}`),
+    );
+  }
+
+  return res.status(StatusCodes.OK).json(gig);
+});
+
 export const createGig = asyncHandler(async (req, res, next) => {
   if (!req.user.isSeller) {
     return next(new ForbiddenError('Only sellers can create a gig!'));
