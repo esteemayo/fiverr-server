@@ -5,6 +5,8 @@ import * as authMiddleware from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
+router.get('/details/:slug', gigController.getGigBySlug);
+
 router
   .route('/')
   .get(authMiddleware.protect, gigController.getGigs)
