@@ -15,6 +15,7 @@ router
 router
   .route('/:id')
   .get(gigController.getGigById)
+  .patch(authMiddleware.protect, gigController.updateGig)
   .delete(authMiddleware.protect, gigController.deleteGig);
 
 export default router;

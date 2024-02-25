@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import slugify from 'slugify';
 import asyncHandler from 'express-async-handler';
 
 import { NotFoundError } from '../errors/notFound.js';
@@ -60,6 +61,36 @@ export const createGig = asyncHandler(async (req, res, next) => {
   const gig = await Gig.create({ ...req.body });
 
   res.status(StatusCodes.CREATED).json(gig);
+});
+
+export const updateGig = asyncHandler(async (req, res, next) => {
+  const { id: gigId } = req.params;
+  const { slug, title } = req.body;
+
+  const gig = await Gig.findById(gigId);
+
+  if (!gig) {
+    return next(
+      new NotFoundError(`There is no gig found with that ID → ${gigId}`),
+    );
+  }
+
+  if (gig.user.toString() === req.user.id || req.user.role === 'admin') {
+    if (title) slug = slugify(title, { lower: true });
+
+    const updatedGig = await Gig.findByIdAndUpdate(
+      gigId,
+      { $set: { ...req.body } },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    res.status(StatusCodes.OK).json(updatedGig);
+  }
+
+  return next(new ForbiddenError('You can delete only your gig!'));
 });
 
 export const deleteGig = asyncHandler(async (req, res, next) => {
