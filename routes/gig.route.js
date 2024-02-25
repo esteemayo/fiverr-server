@@ -12,7 +12,7 @@ router
 
 router
   .route('/:id')
-  .get(gigController.getGig)
+  .get(gigController.getGigById)
   .delete(authMiddleware.protect, gigController.deleteGig);
 
 export default router;

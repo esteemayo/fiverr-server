@@ -23,7 +23,7 @@ export const getGigs = asyncHandler(async (req, res, next) => {
   res.status(StatusCodes.OK).json(gigs);
 });
 
-export const getGig = asyncHandler(async (req, res, next) => {
+export const getGigById = asyncHandler(async (req, res, next) => {
   const { id: gigId } = req.params;
 
   const gig = await Gig.findById(gigId);
