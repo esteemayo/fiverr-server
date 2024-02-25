@@ -34,7 +34,7 @@ export const getGigById = asyncHandler(async (req, res, next) => {
     );
   }
 
-  return res.status(StatusCodes.OK).json(gig);
+  res.status(StatusCodes.OK).json(gig);
 });
 
 export const createGig = asyncHandler(async (req, res, next) => {
