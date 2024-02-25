@@ -6,11 +6,16 @@ import * as reviewController from '../controllers/review.controller';
 const router = express.Router();
 
 router
-  .get('/')
+  .route('/')
   .get(
     authMiddleware.protect,
     authMiddleware.restrictTo('admin'),
     reviewController.getReviews,
+  )
+  .post(
+    authMiddleware.protect,
+    authMiddleware.restrictTo('user'),
+    reviewController.createReview,
   );
 
 router.route('/:id').get(reviewController.getReview);

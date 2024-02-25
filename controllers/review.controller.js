@@ -23,3 +23,12 @@ export const getReview = asyncHandler(async (req, res, next) => {
 
   res.status(StatusCodes.OK).json(review);
 });
+
+export const createReview = asyncHandler(async (req, res, next) => {
+  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.gig) req.body.gig = req.params.gigId;
+
+  const review = await Review.create({ ...req.body });
+
+  res.status(StatusCodes.CREATED).json(review);
+});
