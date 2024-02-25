@@ -21,6 +21,7 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(authMiddleware.protect, reviewController.updateReview);
+  .patch(authMiddleware.protect, reviewController.updateReview)
+  .delete(authMiddleware.protect, reviewController.deleteReview);
 
 export default router;

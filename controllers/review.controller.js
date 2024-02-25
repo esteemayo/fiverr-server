@@ -61,3 +61,23 @@ export const updateReview = asyncHandler(async (req, res, next) => {
 
   return next(new ForbiddenError('You can update only your review!'));
 });
+
+export const deleteReview = asyncHandler(async (req, res, next) => {
+  const { id: reviewId } = req.params;
+
+  const review = await Review.findById(reviewId);
+
+  if (!review) {
+    return next(
+      new NotFoundError(`There is no review found with that ID → ${reviewId}`),
+    );
+  }
+
+  if (String(review.user) === req.user.id || req.user.role === 'admin') {
+    await Review.findByIdAndDelete(reviewId);
+
+    res.status(StatusCodes.NO_CONTENT).end();
+  }
+
+  return next(new ForbiddenError('You can delete only your review!'));
+});
