@@ -27,6 +27,10 @@ export const getReview = asyncHandler(async (req, res, next) => {
 });
 
 export const createReview = asyncHandler(async (req, res, next) => {
+  if (req.user.isSeller) {
+    return next(new ForbiddenError("Sellers can't create a review!"));
+  }
+
   if (!req.body.user) req.body.user = req.user.id;
   if (!req.body.gig) req.body.gig = req.params.gigId;
 
