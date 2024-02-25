@@ -20,7 +20,7 @@ router
 
 router
   .route('/:id')
-  .get(authMiddleware.verifyUser, userController.getUser)
+  .get(userController.getUser)
   .patch(authMiddleware.verifyUser, userController.updateUser)
   .delete(authMiddleware.verifyUser, userController.deleteUser);
 
