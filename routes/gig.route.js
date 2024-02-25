@@ -5,17 +5,16 @@ import * as authMiddleware from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
+router.use(authMiddleware.protect);
+
 router.get('/details/:slug', gigController.getGigBySlug);
 
-router
-  .route('/')
-  .get(authMiddleware.protect, gigController.getGigs)
-  .post(authMiddleware.protect, gigController.createGig);
+router.route('/').get(gigController.getGigs).post(gigController.createGig);
 
 router
   .route('/:id')
   .get(gigController.getGigById)
-  .patch(authMiddleware.protect, gigController.updateGig)
-  .delete(authMiddleware.protect, gigController.deleteGig);
+  .patch(gigController.updateGig)
+  .delete(gigController.deleteGig);
 
 export default router;
