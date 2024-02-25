@@ -13,4 +13,6 @@ router
     reviewController.getReviews,
   );
 
+router.route('/:id').get(reviewController.getReview);
+
 export default router;
