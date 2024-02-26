@@ -71,3 +71,34 @@ export const createOrder = asyncHandler(async (req, res, next) => {
 
   res.status(StatusCodes.CREATED).json(order);
 });
+
+export const updateOrder = asyncHandler(async (req, res, next) => {
+  const { id: orderId } = req.params;
+
+  const order = await Order.findById(orderId);
+
+  if (!order) {
+    return next(
+      new NotFoundError(`There is no order found with that ID → ${orderId}`),
+    );
+  }
+
+  if (
+    order.sellerId === req.user.id ||
+    order.buyerId === req.user.id ||
+    req.user.role === 'admin'
+  ) {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      orderId,
+      { $set: { ...req.body } },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    res.status(StatusCodes.OK).json(updatedOrder);
+  }
+
+  return next(new ForbiddenError('You can update only your order!'));
+});
