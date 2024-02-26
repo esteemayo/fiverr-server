@@ -1,9 +1,26 @@
 import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 
+import { NotFoundError } from '../errors/notFound.js';
 import Conversation from '../models/conversation.model.js';
 
 export const getConversations = asyncHandler(async (req, res, next) => {});
+
+export const getConversation = asyncHandler(async (req, res, next) => {
+  const { id: conversationId } = req.params;
+
+  const conversation = await Conversation.findOne({ id: conversationId });
+
+  if (!conversation) {
+    return next(
+      new NotFoundError(
+        `There is no conversation found with that ID → ${conversationId}`,
+      ),
+    );
+  }
+
+  res.status(StatusCodes.OK).json(conversation);
+});
 
 export const createConversation = asyncHandler(async (req, res, next) => {
   const { isSeller, id: userId } = req.user;
