@@ -24,6 +24,7 @@ router.post(
 router
   .route('/:id')
   .get(authMiddleware.protect, orderController.getOrder)
-  .patch(authMiddleware.protect, orderController.updateOrder);
+  .patch(authMiddleware.protect, orderController.updateOrder)
+  .delete(authMiddleware.protect, orderController.deleteOrder);
 
 export default router;
