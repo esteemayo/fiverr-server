@@ -34,6 +34,7 @@ const orderSchema = new Schema(
     },
     payment_intent: {
       type: String,
+      required: [true, 'An order must have a payment_intent id'],
     },
   },
   {
