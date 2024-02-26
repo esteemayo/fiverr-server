@@ -5,6 +5,7 @@ import Gig from '../models/gig.model.js';
 import Order from '../models/order.model.js';
 
 import { NotFoundError } from '../errors/notFound.js';
+import { ForbiddenError } from '../errors/forbidden.js';
 
 export const getOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find();
@@ -21,6 +22,28 @@ export const getUserOrders = asyncHandler(async (req, res, next) => {
   }).sort('-createdAt');
 
   res.status(StatusCodes.OK).json(orders);
+});
+
+export const getOrder = asyncHandler(async (req, res, next) => {
+  const { id: orderId } = req.params;
+
+  const order = await Order.findById(orderId);
+
+  if (!order) {
+    return next(
+      new NotFoundError(`There is no order found with that ID → ${orderId}`),
+    );
+  }
+
+  if (
+    order.sellerId === req.user.id ||
+    order.buyerId === req.user.id ||
+    req.user.role === 'admin'
+  ) {
+    res.status(StatusCodes.OK).json(order);
+  }
+
+  return next(new ForbiddenError('You can view only your order!'));
 });
 
 export const createOrder = asyncHandler(async (req, res, next) => {
