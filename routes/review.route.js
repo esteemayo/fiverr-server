@@ -5,7 +5,7 @@ import * as reviewController from '../controllers/review.controller.js';
 
 const router = express.Router();
 
-router.get('/gigs/:id', reviewController.getReviewsOnGig);
+router.get('/gigs/:gigId', reviewController.getReviewsOnGig);
 
 router
   .route('/')

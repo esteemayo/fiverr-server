@@ -14,7 +14,7 @@ export const getReviews = asyncHandler(async (req, res, next) => {
 });
 
 export const getReviewsOnGig = asyncHandler(async (req, res, next) => {
-  const { id: gigId } = req.params;
+  const { gigId } = req.params;
 
   const reviews = await Review.find({ gig: gigId });
 
