@@ -13,6 +13,14 @@ export const getReviews = asyncHandler(async (req, res, next) => {
   res.status(StatusCodes.OK).json(reviews);
 });
 
+export const getReviewsOnGig = asyncHandler(async (req, res, next) => {
+  const { id: gigId } = req.params;
+
+  const reviews = await Review.find({ gig: gigId });
+
+  res.status(StatusCodes.OK).json(reviews);
+});
+
 export const getReview = asyncHandler(async (req, res, next) => {
   const { id: reviewId } = req.params;
 
