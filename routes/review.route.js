@@ -1,7 +1,7 @@
 import express from 'express';
 
-import * as authMiddleware from '../middlewares/auth.middleware';
-import * as reviewController from '../controllers/review.controller';
+import * as authMiddleware from '../middlewares/auth.middleware.js';
+import * as reviewController from '../controllers/review.controller.js';
 
 const router = express.Router();
 
