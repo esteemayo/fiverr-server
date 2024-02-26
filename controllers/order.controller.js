@@ -17,6 +17,7 @@ export const getUserOrders = asyncHandler(async (req, res, next) => {
     ...(req.user.isSeller
       ? { sellerId: req.user.id }
       : { buyerId: req.user.id }),
+    isCompleted: true,
   }).sort('-createdAt');
 
   res.status(StatusCodes.OK).json(orders);
