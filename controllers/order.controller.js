@@ -12,6 +12,12 @@ export const getOrders = asyncHandler(async (req, res, next) => {
   res.status(StatusCodes.OK).json(orders);
 });
 
+export const getUserOrders = asyncHandler(async (req, res, next) => {
+  const orders = await Order.find({ buyerId: req.user.id });
+
+  res.status(StatusCodes.OK).json(orders);
+});
+
 export const createOrder = asyncHandler(async (req, res, next) => {
   const { gigId } = req.params;
 

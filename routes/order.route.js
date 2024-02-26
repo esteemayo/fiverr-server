@@ -12,6 +12,8 @@ router.get(
   orderController.getOrders,
 );
 
+router.get('/user', authMiddleware.protect, orderController.getUserOrders);
+
 router.post(
   '/:gigId',
   authMiddleware.protect,
