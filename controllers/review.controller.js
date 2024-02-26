@@ -1,10 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import asyncHandler from 'express-async-handler';
 
+import Gig from '../models/gig.model.js';
+import Review from './../models/review.model.js';
+
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
-
-import Review from './../models/review.model.js';
 
 export const getReviews = asyncHandler(async (req, res, next) => {
   const reviews = await Review.find();
@@ -27,16 +28,34 @@ export const getReview = asyncHandler(async (req, res, next) => {
 });
 
 export const createReview = asyncHandler(async (req, res, next) => {
-  if (req.user.isSeller) {
+  const { id: userId, isSeller } = req.user;
+
+  if (isSeller) {
     return next(new ForbiddenError("Sellers can't create a review!"));
   }
 
-  if (!req.body.user) req.body.user = req.user.id;
-  if (!req.body.gig) req.body.gig = req.params.gigId;
+  if (!req.body.user) req.body.user = userId;
 
-  const review = await Review.create({ ...req.body });
+  const review = await Review.findOne({
+    gig: req.body.gig,
+    user: userId,
+  });
 
-  res.status(StatusCodes.CREATED).json(review);
+  if (review) {
+    return next(
+      new ForbiddenError('You have already created a review for this gig'),
+    );
+  }
+
+  const newReview = await Review.create({ ...req.body });
+  await Gig.findByIdAndUpdate(req.body.gig, {
+    $inc: {
+      totalStars: req.body.star,
+      starNumber: 1,
+    },
+  });
+
+  res.status(StatusCodes.CREATED).json(newReview);
 });
 
 export const updateReview = asyncHandler(async (req, res, next) => {
