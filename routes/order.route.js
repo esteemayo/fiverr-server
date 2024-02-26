@@ -5,26 +5,22 @@ import * as orderController from '../controllers/order.controller.js';
 
 const router = express.Router();
 
-router.get(
-  '/',
-  authMiddleware.protect,
-  authMiddleware.restrictTo('admin'),
-  orderController.getOrders,
-);
+router.use(authMiddleware.protect);
 
-router.get('/user', authMiddleware.protect, orderController.getUserOrders);
+router.get('/', authMiddleware.restrictTo('admin'), orderController.getOrders);
+
+router.get('/user', orderController.getUserOrders);
 
 router.post(
   '/:gigId',
-  authMiddleware.protect,
   authMiddleware.restrictTo('user'),
   orderController.createOrder,
 );
 
 router
   .route('/:id')
-  .get(authMiddleware.protect, orderController.getOrder)
-  .patch(authMiddleware.protect, orderController.updateOrder)
-  .delete(authMiddleware.protect, orderController.deleteOrder);
+  .get(orderController.getOrder)
+  .patch(orderController.updateOrder)
+  .delete(orderController.deleteOrder);
 
 export default router;
