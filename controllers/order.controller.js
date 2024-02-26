@@ -119,17 +119,10 @@ export const deleteOrder = asyncHandler(async (req, res, next) => {
     order.buyerId === req.user.id ||
     req.user.role === 'admin'
   ) {
-    const updatedOrder = await Order.findByIdAndUpdate(
-      orderId,
-      { $set: { ...req.body } },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+    const updatedOrder = await Order.findByIdAndDelete(orderId);
 
     res.status(StatusCodes.OK).json(updatedOrder);
   }
 
-  return next(new ForbiddenError('You can update only your order!'));
+  return next(new ForbiddenError('You can delete only your order!'));
 });
