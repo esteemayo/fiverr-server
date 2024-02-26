@@ -13,10 +13,10 @@ export const getOrders = asyncHandler(async (req, res, next) => {
 });
 
 export const getUserOrders = asyncHandler(async (req, res, next) => {
+  const { isSeller, id: userId } = req.user;
+
   const orders = await Order.find({
-    ...(req.user.isSeller
-      ? { sellerId: req.user.id }
-      : { buyerId: req.user.id }),
+    ...(isSeller ? { sellerId: userId } : { buyerId: userId }),
     isCompleted: true,
   }).sort('-createdAt');
 
