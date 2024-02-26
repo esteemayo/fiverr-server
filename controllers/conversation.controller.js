@@ -4,7 +4,15 @@ import asyncHandler from 'express-async-handler';
 import { NotFoundError } from '../errors/notFound.js';
 import Conversation from '../models/conversation.model.js';
 
-export const getConversations = asyncHandler(async (req, res, next) => {});
+export const getConversations = asyncHandler(async (req, res, next) => {
+  const { isSeller, id: userId } = req.user;
+
+  const conversation = await Conversation.find(
+    isSeller ? { sellerId: userId } : { buyerId: userId },
+  );
+
+  res.status(StatusCodes.OK).json(conversation);
+});
 
 export const getConversation = asyncHandler(async (req, res, next) => {
   const { id: conversationId } = req.params;
