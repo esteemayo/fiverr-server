@@ -12,4 +12,6 @@ router
   .get(conversationController.getConversations)
   .post(conversationController.createConversation);
 
+router.route('/:id').patch(conversationController.updateConversation);
+
 export default router;

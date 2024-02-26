@@ -20,3 +20,24 @@ export const createConversation = asyncHandler(async (req, res, next) => {
 
   res.status(StatusCodes.CREATED).json(conversation);
 });
+
+export const updateConversation = asyncHandler(async (req, res, next) => {
+  const { isSeller } = req.user;
+  const { id: conversationId } = req.params;
+
+  const updatedConversation = await Conversation.findOneAndUpdate(
+    conversationId,
+    {
+      $set: {
+        readBySeller: isSeller,
+        readByBuyer: !isSeller,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  res.status(StatusCodes.OK).json(updatedConversation);
+});
