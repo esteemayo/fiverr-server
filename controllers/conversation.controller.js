@@ -54,8 +54,7 @@ export const updateConversation = asyncHandler(async (req, res, next) => {
     conversationId,
     {
       $set: {
-        readBySeller: isSeller,
-        readByBuyer: !isSeller,
+        ...(isSeller ? { readBySeller: true } : { readByBuyer: true }),
       },
     },
     {
