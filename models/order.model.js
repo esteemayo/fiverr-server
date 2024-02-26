@@ -22,11 +22,11 @@ const orderSchema = new Schema(
     },
     sellerId: {
       type: String,
-      required: [true, 'An order must have an image'],
+      required: [true, 'An order must have a seller id'],
     },
     buyerId: {
       type: String,
-      required: [true, 'An order must have an image'],
+      required: [true, 'An order must have a buyer id'],
     },
     isCompleted: {
       type: Boolean,
