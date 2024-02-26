@@ -5,6 +5,13 @@ import * as orderController from '../controllers/order.controller.js';
 
 const router = express.Router();
 
+router.get(
+  '/',
+  authMiddleware.protect,
+  authMiddleware.restrictTo('admin'),
+  orderController.getOrders,
+);
+
 router.post(
   '/:gigId',
   authMiddleware.protect,

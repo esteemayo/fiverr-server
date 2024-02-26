@@ -6,6 +6,12 @@ import Order from '../models/order.model.js';
 
 import { NotFoundError } from '../errors/notFound.js';
 
+export const getOrders = asyncHandler(async (req, res, next) => {
+  const orders = await Order.find();
+
+  res.status(StatusCodes.OK).json(orders);
+});
+
 export const createOrder = asyncHandler(async (req, res, next) => {
   const { gigId } = req.params;
 
