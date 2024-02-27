@@ -9,7 +9,7 @@ export const getConversations = asyncHandler(async (req, res, next) => {
 
   const conversation = await Conversation.find(
     isSeller ? { sellerId: userId } : { buyerId: userId },
-  );
+  ).sort('-updatedAt');
 
   res.status(StatusCodes.OK).json(conversation);
 });
