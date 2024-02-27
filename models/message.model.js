@@ -23,6 +23,15 @@ const messageSchema = new Schema(
   },
 );
 
+messageSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: 'username image',
+  });
+
+  next();
+});
+
 const Message =
   mongoose.models.Message || mongoose.model('Message', messageSchema);
 
