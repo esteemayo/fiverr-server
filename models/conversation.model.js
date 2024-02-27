@@ -36,6 +36,6 @@ const conversationSchema = new Schema(
 
 const Conversation =
   mongoose.models.Conversation ||
-  mongoose.model('conversation', conversationSchema);
+  mongoose.model('Conversation', conversationSchema);
 
 export default Conversation;
