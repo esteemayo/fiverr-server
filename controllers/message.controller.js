@@ -7,7 +7,7 @@ import Conversation from '../models/conversation.model.js';
 export const getMessages = asyncHandler(async (req, res, next) => {
   const { conversationId } = req.params;
 
-  const messages = await Message.find({ conversation: conversationId });
+  const messages = await Message.find({ conversationId });
 
   res.status(StatusCodes.OK).json(messages);
 });
