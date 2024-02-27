@@ -4,9 +4,8 @@ const { Schema } = mongoose;
 
 const messageSchema = new Schema(
   {
-    conversation: {
-      type: mongoose.Types.ObjectId,
-      ref: 'Conversation',
+    conversationId: {
+      type: String,
       required: [true, 'A message must have a conversation id'],
     },
     user: {
