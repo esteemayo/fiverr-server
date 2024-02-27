@@ -5,10 +5,10 @@ import * as messageController from '../controllers/message.controller.js';
 
 const router = express.Router();
 
-router.get(
-  '/:conversationId',
-  authMiddleware.protect,
-  messageController.getMessages,
-);
+router.use(authMiddleware.protect);
+
+router.get('/:conversationId', messageController.getMessages);
+
+router.post('/', messageController.createMessage);
 
 export default router;
