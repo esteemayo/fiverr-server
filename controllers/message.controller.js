@@ -19,7 +19,7 @@ export const createMessage = asyncHandler(async (req, res, next) => {
 
   const message = await Message.create({ ...req.body });
   await Conversation.findOneAndUpdate(
-    { id: req.body.conversation },
+    { id: req.body.conversationId },
     {
       $set: {
         readBySeller: isSeller,
