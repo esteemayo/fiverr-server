@@ -7,7 +7,10 @@ const router = express.Router();
 
 router.use(authMiddleware.protect);
 
-router.get('/', authMiddleware.restrictTo('admin'), orderController.getOrders);
+router
+  .route('/')
+  .get(authMiddleware.restrictTo('admin'), orderController.getOrders)
+  .patch(orderController.updateOrder);
 
 router.get('/user', orderController.getUserOrders);
 
@@ -20,7 +23,6 @@ router.post(
 router
   .route('/:id')
   .get(orderController.getOrder)
-  .patch(orderController.updateOrder)
   .delete(orderController.deleteOrder);
 
 export default router;
