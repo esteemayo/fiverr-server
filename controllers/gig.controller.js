@@ -65,7 +65,6 @@ export const createGig = asyncHandler(async (req, res, next) => {
 
 export const updateGig = asyncHandler(async (req, res, next) => {
   const { id: gigId } = req.params;
-  const { slug, title } = req.body;
 
   const gig = await Gig.findById(gigId);
 
@@ -76,7 +75,7 @@ export const updateGig = asyncHandler(async (req, res, next) => {
   }
 
   if (gig.user.toString() === req.user.id || req.user.role === 'admin') {
-    if (title) slug = slugify(title, { lower: true });
+    if (req.body.title) req.body.slug = slugify(req.body.title, { lower: true });
 
     const updatedGig = await Gig.findByIdAndUpdate(
       gigId,
