@@ -51,7 +51,7 @@ export const updateConversation = asyncHandler(async (req, res, next) => {
   const { id: conversationId } = req.params;
 
   const updatedConversation = await Conversation.findOneAndUpdate(
-    conversationId,
+    { id: conversationId },
     {
       $set: {
         ...(isSeller ? { readBySeller: true } : { readByBuyer: true }),
