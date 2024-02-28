@@ -12,12 +12,6 @@ router.get('/', authMiddleware.restrictTo('admin'), orderController.getOrders);
 router.get('/user', orderController.getUserOrders);
 
 router.post(
-  '/:gigId',
-  authMiddleware.restrictTo('user'),
-  orderController.createOrder,
-);
-
-router.post(
   '/create-payment-intent/:id',
   authMiddleware.restrictTo('user'),
   orderController.createPaymentIntent,
