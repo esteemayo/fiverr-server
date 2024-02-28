@@ -1,4 +1,5 @@
 import { StatusCodes } from 'http-status-codes';
+import Stripe from 'stripe';
 import asyncHandler from 'express-async-handler';
 
 import Gig from '../models/gig.model.js';
@@ -6,6 +7,8 @@ import Order from '../models/order.model.js';
 
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const getOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find();
@@ -70,6 +73,42 @@ export const createOrder = asyncHandler(async (req, res, next) => {
   const order = await Order.create({ ...newOrder });
 
   res.status(StatusCodes.CREATED).json(order);
+});
+
+export const createPaymentIntent = asyncHandler(async (req, res, next) => {
+  const { id: gigId } = req.params;
+
+  const gig = await Gig.findById(gigId);
+
+  if (!gig) {
+    return next(
+      new NotFoundError(`There is no gig found with that ID → ${gigId}`),
+    );
+  }
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: gig.price * 100,
+    currency: 'usd',
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  const newOrder = {
+    gig: gig._id,
+    img: gig.cover,
+    title: gig.title,
+    buyerId: req.user.id,
+    sellerId: gig.user,
+    price: gig.price,
+    payment_intent: paymentIntent.id,
+  };
+
+  await Order.create({ ...newOrder });
+
+  res.status(StatusCodes.OK).json({
+    clientSecret: paymentIntent.client_secret,
+  });
 });
 
 export const updateOrder = asyncHandler(async (req, res, next) => {

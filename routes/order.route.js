@@ -17,6 +17,12 @@ router.post(
   orderController.createOrder,
 );
 
+router.post(
+  '/create-payment-intent/:id',
+  authMiddleware.restrictTo('user'),
+  orderController.createPaymentIntent,
+);
+
 router
   .route('/:id')
   .get(orderController.getOrder)
