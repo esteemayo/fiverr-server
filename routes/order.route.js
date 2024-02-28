@@ -7,7 +7,10 @@ const router = express.Router();
 
 router.use(authMiddleware.protect);
 
-router.get('/', authMiddleware.restrictTo('admin'), orderController.getOrders);
+router
+  .route('/')
+  .get(authMiddleware.restrictTo('admin'), orderController.getOrders)
+  .patch(authMiddleware.restrictTo('user'), orderController.confirmOrder);
 
 router.get('/user', orderController.getUserOrders);
 

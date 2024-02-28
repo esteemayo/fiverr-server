@@ -116,6 +116,35 @@ export const updateOrder = asyncHandler(async (req, res, next) => {
   return next(new ForbiddenError('You can update only your order!'));
 });
 
+export const confirmOrder = asyncHandler(async (req, res, next) => {
+  const { payment_intent } = req.body;
+
+  const order = await Order.findOneAndUpdate(
+    {
+      payment_intent,
+    },
+    {
+      $set: {
+        isCompleted: true,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!order) {
+    return next(
+      new NotFoundError(
+        `There is no order found with that paymentIntent → ${payment_intent}`,
+      ),
+    );
+  }
+
+  res.status(StatusCodes.OK).json(order);
+});
+
 export const deleteOrder = asyncHandler(async (req, res, next) => {
   const { id: orderId } = req.params;
 
