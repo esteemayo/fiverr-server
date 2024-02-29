@@ -75,7 +75,8 @@ export const updateGig = asyncHandler(async (req, res, next) => {
   }
 
   if (gig.user.toString() === req.user.id || req.user.role === 'admin') {
-    if (req.body.title) req.body.slug = slugify(req.body.title, { lower: true });
+    if (req.body.title)
+      req.body.slug = slugify(req.body.title, { lower: true });
 
     const updatedGig = await Gig.findByIdAndUpdate(
       gigId,
