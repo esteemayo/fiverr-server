@@ -7,23 +7,17 @@ const router = express.Router();
 
 router.get('/gigs/:gigId', reviewController.getReviewsOnGig);
 
+router.use(authMiddleware.protect);
+
 router
   .route('/')
-  .get(
-    authMiddleware.protect,
-    authMiddleware.restrictTo('admin'),
-    reviewController.getReviews,
-  )
-  .post(
-    authMiddleware.protect,
-    authMiddleware.restrictTo('user'),
-    reviewController.createReview,
-  );
+  .get(authMiddleware.restrictTo('admin'), reviewController.getReviews)
+  .post(authMiddleware.restrictTo('user'), reviewController.createReview);
 
 router
   .route('/:id')
-  .get(authMiddleware.protect, reviewController.getReview)
-  .patch(authMiddleware.protect, reviewController.updateReview)
-  .delete(authMiddleware.protect, reviewController.deleteReview);
+  .get(reviewController.getReview)
+  .patch(reviewController.updateReview)
+  .delete(reviewController.deleteReview);
 
 export default router;
