@@ -23,11 +23,7 @@ router
 router
   .route('/:id')
   .get(authMiddleware.protect, reviewController.getReview)
-  .patch(
-    authMiddleware.protect,
-    authMiddleware.restrictTo('user'),
-    reviewController.updateReview,
-  )
+  .patch(authMiddleware.protect, reviewController.updateReview)
   .delete(authMiddleware.protect, reviewController.deleteReview);
 
 export default router;
