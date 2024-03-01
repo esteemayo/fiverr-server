@@ -7,8 +7,16 @@ import Review from './../models/review.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
+import { APIFeatures } from '../utils/apiFeatures.js';
+
 export const getReviews = asyncHandler(async (req, res, next) => {
-  const reviews = await Review.find();
+  const features = new APIFeatures(Review.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const reviews = await features.query;
 
   res.status(StatusCodes.OK).json(reviews);
 });
