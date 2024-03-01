@@ -21,7 +21,7 @@ import conversationRoute from './routes/conversation.route.js';
 import messageRoute from './routes/message.route.js';
 
 import { NotFoundError } from './errors/notFound.js';
-import { errorHandlerMiddleware } from './middlewares/error.handler.middleware.js';
+import errorHandlerMiddleware from './middlewares/error.handler.middleware.js';
 
 dotenv.config({ path: './variable.env' });
 
