@@ -8,7 +8,7 @@ import Order from '../models/order.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
-import { APIFeatures } from './../utils/apiFeatures';
+import { APIFeatures } from './../utils/apiFeatures.js';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
