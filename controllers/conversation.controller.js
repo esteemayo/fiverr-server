@@ -77,7 +77,7 @@ export const deleteConversation = asyncHandler(async (req, res, next) => {
 
   if (!conversation) {
     return next(
-      NotFoundError(
+      new NotFoundError(
         `There is no conversation found with that ID → ${conversationId}`,
       ),
     );
