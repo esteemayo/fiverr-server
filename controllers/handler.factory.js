@@ -62,7 +62,7 @@ export const updateOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     const { id: docId } = req.params;
 
-    const doc = await Model.findByIdAndUpdate(
+    const updatedDoc = await Model.findByIdAndUpdate(
       docId,
       { $set: { ...req.body } },
       {
@@ -71,7 +71,7 @@ export const updateOne = (Model) =>
       },
     );
 
-    if (!doc) {
+    if (!updatedDoc) {
       return next(
         new NotFoundError(
           `There is no document found with the given ID → ${docId}`,
