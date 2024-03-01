@@ -8,10 +8,18 @@ import Order from '../models/order.model.js';
 import { NotFoundError } from '../errors/notFound.js';
 import { ForbiddenError } from '../errors/forbidden.js';
 
+import { APIFeatures } from './../utils/apiFeatures';
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const getOrders = asyncHandler(async (req, res, next) => {
-  const orders = await Order.find();
+  const features = new APIFeatures(Order.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const orders = await features.query;
 
   res.status(StatusCodes.OK).json(orders);
 });
