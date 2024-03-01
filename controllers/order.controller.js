@@ -88,7 +88,7 @@ export const createPaymentIntent = asyncHandler(async (req, res, next) => {
 
   await Order.create({ ...newOrder });
 
-  res.status(StatusCodes.OK).json({
+  res.status(StatusCodes.CREATED).json({
     clientSecret: paymentIntent.client_secret,
   });
 });
