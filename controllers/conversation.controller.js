@@ -65,3 +65,23 @@ export const updateConversation = asyncHandler(async (req, res, next) => {
 
   res.status(StatusCodes.OK).json(updatedConversation);
 });
+
+export const deleteConversation = asyncHandler(async (req, res, next) => {
+  const { id: conversationId } = req.params;
+  const { isSeller, id: userId } = req.user;
+
+  const conversation = await Conversation.findOneAndDelete({
+    id: conversationId,
+    ...(isSeller ? { sellerId: userId } : { buyerId: userId }),
+  });
+
+  if (!conversation) {
+    return next(
+      NotFoundError(
+        `There is no conversation found with that ID → ${conversationId}`,
+      ),
+    );
+  }
+
+  res.status(StatusCodes.NO_CONTENT).end();
+});

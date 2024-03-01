@@ -15,6 +15,7 @@ router
 router
   .route('/:id')
   .get(conversationController.getConversation)
-  .patch(conversationController.updateConversation);
+  .patch(conversationController.updateConversation)
+  .delete(conversationController.deleteConversation);
 
 export default router;
