@@ -13,9 +13,9 @@ export const getMessages = asyncHandler(async (req, res, next) => {
 });
 
 export const createMessage = asyncHandler(async (req, res, next) => {
-  const { isSeller } = req.user;
+  const { isSeller, id: userId } = req.user;
 
-  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.user) req.body.user = userId;
 
   const message = await Message.create({ ...req.body });
   await Conversation.findOneAndUpdate(
