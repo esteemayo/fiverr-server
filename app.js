@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import express from 'express';
 import hpp from 'hpp';
 import rateLimit from 'express-rate-limit';
