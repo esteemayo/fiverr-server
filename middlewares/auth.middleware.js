@@ -4,7 +4,7 @@ import { promisify } from 'util';
 import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 
-import { ForbiddenError } from './../errors/forbidden.js';
+import { ForbiddenError } from '../errors/forbidden.js';
 import { UnauthenticatedError } from '../errors/unauthenticated.js';
 
 import User from '../models/user.model.js';
