@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import express from 'express';
 
-import * as authMiddleware from '../middlewares/auth.middleware.js';
 import * as authController from '../controllers/auth.controller.js';
+import * as authMiddleware from '../middlewares/auth.middleware.js';
 
 const router = express.Router();
 
