@@ -136,7 +136,7 @@ userSchema.methods.changedPasswordResetToken = function () {
     .update(resetToken)
     .digest('hex');
 
-  this.resetPasswordExpires = Date.now() + 10 * 10 * 1000;
+  this.resetPasswordExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
 };
